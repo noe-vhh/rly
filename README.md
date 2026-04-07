@@ -6,7 +6,7 @@ Command memory and workflow orchestrator - a terminal companion.
 
 ## Status
 
-Early development — Tier 1 (command library)
+Early development - Tier 1 (command library)
 
 ## Stack
 
@@ -84,8 +84,8 @@ pip install -e "\\wsl$\Ubuntu\home\YOUR_USERNAME\dev\rly[dev]"
 
 Edit `launch.ps1` in the project root and update both paths to match your setup:
 
-- `$projectRoot` — your WSL project path
-- `$pythonExe` — your Windows venv Python path
+- `$projectRoot` - your WSL project path
+- `$pythonExe` - your Windows venv Python path
 
 ### Run
 
@@ -96,7 +96,7 @@ Edit `launch.ps1` in the project root and update both paths to match your setup:
 
 ### Why the separate Windows venv?
 
-PyWebView on Windows uses Edge WebView2 via `pythonnet`. The `pythonnet` library crashes when loaded from a UNC path (`\\wsl$\...`), so the venv must live on a native Windows drive. The source code stays in WSL — only the venv is on the Windows side.
+PyWebView on Windows uses Edge WebView2 via `pythonnet`. The `pythonnet` library crashes when loaded from a UNC path (`\\wsl$\...`), so the venv must live on a native Windows drive. The source code stays in WSL - only the venv is on the Windows side.
 
 If you add new dependencies to `pyproject.toml`, re-run `pip install -e "\\wsl$\...\rly[dev]"` in the Windows venv to sync them.
 
