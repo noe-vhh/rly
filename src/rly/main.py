@@ -1,6 +1,7 @@
 import threading
 import uvicorn
 import webview
+import argparse
 from pathlib import Path
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
@@ -33,11 +34,20 @@ def start_server():
     uvicorn.run(app, host="127.0.0.1", port=8000, log_level="info")
 
 if __name__ == "__main__":
-    # Start the server in a BACKGROUND thread | daemon=True means "kill this thread when the main program exits"
-    server_thread = threading.Thread(target=start_server, daemon=True)
-    server_thread.start()
+    parser = argparse.ArgumentParser()
+    # store_true means: if --dev is present, set it to True
+    parser.add_argument("--dev", action="store_true")
+    args = parser.parse_args()
 
-    # Open the PyWebView window pointing at our local server
-    # This is the MAIN thread, it blocks until the window is closed
-    webview.create_window("rly", "http://127.0.0.1:8000", width=1000, height=700)
-    webview.start()
+    if args.dev:
+        # runs directly, blocks until you Ctrl+C
+        start_server()  
+    else:
+        # Start the server in a BACKGROUND thread | daemon=True means "kill this thread when the main program exits"
+        server_thread = threading.Thread(target=start_server, daemon=True)
+        server_thread.start()
+
+        # Open the PyWebView window pointing at our local server
+        # This is the MAIN thread, it blocks until the window is closed
+        webview.create_window("rly", "http://127.0.0.1:8000", width=1000, height=700)
+        webview.start()
