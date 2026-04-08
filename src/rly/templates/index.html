@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>rly</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style.css?v=3">
 </head>
 <body>
     <div class="app-layout">
@@ -18,11 +18,24 @@
         <main class="content">
             <header class="content-header">
                 <h1>All actions</h1>
+                <button class="theme-toggle" onclick="
+                    document.body.classList.toggle('theme-one-dark');
+                    if (document.body.classList.contains('theme-one-dark')) {
+                        localStorage.setItem('theme', 'one-dark');
+                    } else {
+                        localStorage.removeItem('theme');
+                    }
+                ">◐</button>
             </header>
             <div class="action-list">
                 <p class="empty-state">No actions yet. Time to add some!</p>
             </div>
         </main>
     </div>
+<script>
+    if (localStorage.getItem('theme') === 'one-dark') {
+        document.body.classList.add('theme-one-dark');
+    }
+</script>
 </body>
 </html>

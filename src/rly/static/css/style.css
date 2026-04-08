@@ -1,3 +1,34 @@
+/*
+   THEMES
+   :root = default theme (rly dark)
+   body.theme-one-dark = One Dark Pro
+   Swap themes by toggling the class on <body>
+*/
+
+:root {
+    --bg-primary: #0f0f12;      /* main app background */
+    --bg-sidebar: #16161c;      /* sidebar background, slightly lighter */
+    --bg-active: #1e1e2a;       /* active nav item highlight */
+    --border: #2a2a35;          /* subtle borders */
+    --text-primary: #e0e0e0;    /* main readable text */
+    --text-muted: #999;         /* de-emphasised text, nav items */
+    --text-faint: #666;         /* very quiet text, labels */
+    --text-empty: #555;         /* empty state placeholder */
+    --accent: #a78bfa;          /* purple — brand colour */
+}
+
+body.theme-one-dark {
+    --bg-primary: #282c34;
+    --bg-sidebar: #21252b;
+    --bg-active: #2c313a;
+    --border: #3e4451;
+    --text-primary: #abb2bf;
+    --text-muted: #828997;
+    --text-faint: #5c6370;
+    --text-empty: #4b5263;
+    --accent: #c678dd;          /* One Dark's purple */
+}
+
 /* Reset & base */
 * {
     margin: 0;
@@ -7,8 +38,8 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: #0f0f12;
-    color: #e0e0e0;
+    background: var(--bg-primary);
+    color: var(--text-primary);
     height: 100vh;
     overflow: hidden;
 }
@@ -22,8 +53,8 @@ body {
 
 /* Sidebar */
 .sidebar {
-    background: #16161c;
-    border-right: 1px solid #2a2a35;
+    background: var(--bg-sidebar);
+    border-right: 1px solid var(--border);
     padding: 16px 12px;
     display: flex;
     flex-direction: column;
@@ -33,7 +64,7 @@ body {
 .sidebar-header {
     font-size: 18px;
     font-weight: 600;
-    color: #a78bfa;
+    color: var(--accent);
     padding: 8px 10px;
     margin-bottom: 8px;
 }
@@ -42,7 +73,7 @@ body {
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: #666;
+    color: var(--text-faint);
     padding: 8px 10px;
 }
 
@@ -50,14 +81,14 @@ body {
     display: block;
     padding: 8px 10px;
     border-radius: 6px;
-    color: #999;
+    color: var(--text-muted);
     text-decoration: none;
     font-size: 13px;
 }
 
 .nav-item.active {
-    background: #1e1e2a;
-    color: #a78bfa;
+    background: var(--bg-active);
+    color: var(--accent);
 }
 
 /* Content area */
@@ -70,7 +101,7 @@ body {
 
 .content-header {
     padding: 16px 20px;
-    border-bottom: 1px solid #2a2a35;
+    border-bottom: 1px solid var(--border);
 }
 
 .content-header h1 {
@@ -84,8 +115,30 @@ body {
 }
 
 .empty-state {
-    color: #555;
+    color: var(--text-empty);
     font-size: 14px;
     padding: 40px 0;
     text-align: center;
+}
+
+/* Theme toggle button */
+.content-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.theme-toggle {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.theme-toggle:hover {
+    border-color: var(--accent);
+    color: var(--accent);
 }
