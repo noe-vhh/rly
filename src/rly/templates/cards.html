@@ -1,0 +1,19 @@
+{% for action in actions %}
+<div class="action-card">
+    <h3>{{ action.name }}</h3>
+    <p>{{ action.command }}</p>
+    <div class="action-tags">
+        {% for tag in action.tags %}
+            <span class="tag">{{ tag }}</span>
+        {% endfor %}
+    </div>
+    <div class="action-dangerlevel">
+        {% if action.dangerLevel == "destructive" %}
+            <span class="badge-destructive">destructive</span>
+        {% endif %}
+    </div>
+    <button> 
+        ▶
+    </button>
+</div>
+{% endfor %}

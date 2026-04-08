@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>rly</title>
     <link rel="stylesheet" href="/static/css/style.css?v=3">
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"></script>
 </head>
 <body>
     <div class="app-layout">
@@ -27,8 +28,12 @@
                     }
                 ">◐</button>
             </header>
-            <div class="action-list">
-                <p class="empty-state">No actions yet. Time to add some!</p>
+            <div class="action-list" 
+                id="action-list"
+                hx-get="/api/actions/cards"
+                hx-trigger="load"
+                hx-target="#action-list"
+                hx-swap="innerHTML">
             </div>
         </main>
     </div>
