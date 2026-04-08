@@ -47,6 +47,9 @@ Same data model, same UI, same search. Complexity scales with the user.
 - Multi-user / team features
 - Remote execution
 - Plugin system or marketplace
+- **Distribution via PyPI** (`pip install rly` / `pip install --upgrade rly`)
+- Optional: bundled installer via PyInstaller for colleagues without Python
+- Optional: startup update-check against PyPI version
 - **This is where it becomes a product**
 
 ---
@@ -136,6 +139,12 @@ rly/
   "dangerLevel": "normal"
 }
 ```
+
+### Shell type field (planned)
+Actions will support a `shell` field for filtering by environment:
+- Values: `bash`, `zsh`, `powershell`, `wsl`
+- UI: filter pills/bubbles in the style of oh-my-posh segments
+- Same filter pattern as tags — just another dimension to sort by
 
 ### Workflow action (Tier 3)
 

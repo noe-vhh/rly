@@ -7,3 +7,4 @@ build/
 .env
 *.db
 .ruff_cache/
+QUICKSTART.md
