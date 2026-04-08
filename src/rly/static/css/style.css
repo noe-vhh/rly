@@ -47,7 +47,7 @@ body {
 /* Layout */
 .app-layout {
     display: grid;
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 280px 1fr;
     height: 100vh;
 }
 
@@ -58,37 +58,42 @@ body {
     padding: 16px 12px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 4px;
 }
 
 .sidebar-header {
-    font-size: 18px;
+    font-size: 24px;
     font-weight: 600;
     color: var(--accent);
     padding: 8px 10px;
     margin-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 32px;
 }
 
 .nav-label {
-    font-size: 11px;
-    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: 600;
     letter-spacing: 0.5px;
-    color: var(--text-faint);
-    padding: 8px 10px;
+    color: var(--text-primary);
+    padding: 16px 10px 16px 10px;
 }
 
 .nav-item {
     display: block;
     padding: 8px 10px;
     border-radius: 6px;
-    color: var(--text-muted);
+    color: var(--text-primary);
     text-decoration: none;
-    font-size: 13px;
+    font-size: 16px;
+    font-weight: 600;
 }
 
 .nav-item.active {
-    background: var(--bg-active);
+    background: transparent;
     color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 6px;
 }
 
 /* Content area */
@@ -102,16 +107,67 @@ body {
 .content-header {
     padding: 16px 20px;
     border-bottom: 1px solid var(--border);
+    color: var(--text-primary);
+    font-weight: 600;
 }
 
 .content-header h1 {
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
 }
 
 .action-list {
     padding: 16px 20px;
     flex: 1;
+}
+
+.action-card {
+    background: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 8px;
+    position: relative;
+}
+
+.action-card p {
+    color: var(--text-muted);
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.action-card button {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 12px;
+    width: 42px;
+    height: 42px;
+}
+
+.action-card button:hover {
+    border-color: var(--accent);
+}
+
+.action-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.tag {
+    background: var(--bg-active);
+    color: var(--text-muted);
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 70px;
 }
 
 .empty-state {
@@ -136,6 +192,8 @@ body {
     border-radius: 6px;
     font-size: 12px;
     cursor: pointer;
+    width: 32px;
+    height: 32px;
 }
 
 .theme-toggle:hover {
