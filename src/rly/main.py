@@ -2,6 +2,7 @@ import threading
 import uvicorn
 import webview
 import argparse
+from rly.api.routes import router
 from pathlib import Path
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
@@ -12,6 +13,8 @@ BASE_DIR = Path(__file__).parent
 
 # FastAPI app
 app = FastAPI()
+
+app.include_router(router)
 
 # Tell FastAPI where to find static files (CSS, JS) and templates (HTML)
 # The "/static" first arg is the URL path, so your CSS will be at /static/css/style.css

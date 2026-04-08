@@ -1,0 +1,28 @@
+[
+    {
+    "id": "rly-wsl-dev-quickstart",
+    "name": "rly: WSL Dev QuickStart",
+    "description": "Start rly --dev in WSL",
+    "type": "command",
+    "shell": "wsl",
+    "category": "dev",
+    "tags": ["dev", "rly", "start"],
+    "command": "cd dev/rly && python -m src.rly.main --dev",
+    "workingDirectory": "~",
+    "parameters": [],
+    "dangerLevel": "normal"
+    },
+    {
+    "id": "rly-psh-dev-quickstart",
+    "name": "rly: PSH Dev QuickStart",
+    "description": "Start rly --dev in PSH",
+    "type": "command",
+    "shell": "powershell",
+    "category": "dev",
+    "tags": ["dev", "rly", "start"],
+    "command": "cd C:\\Users\\noevh\\Documents\\MEGA\\VsCode\\rly-env && & '\\\\wsl$\\Ubuntu\\home\\noe\\dev\\rly\\launch.ps1'",
+    "workingDirectory": "C:\\Users\\noevh",
+    "parameters": [],
+    "dangerLevel": "normal"
+    }
+]
