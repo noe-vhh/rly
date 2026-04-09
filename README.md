@@ -1,4 +1,4 @@
-# rly
+# relay
 
 Command memory and workflow orchestrator - a terminal companion.
 
@@ -29,8 +29,8 @@ Early development - Tier 1 (command library)
 
 ```bash
 # Clone the repo
-git clone git@github.com:YOUR_USERNAME/rly.git
-cd rly
+git clone git@github.com:YOUR_USERNAME/relay.git
+cd relay
 
 # Create virtual environment
 python3 -m venv .venv
@@ -38,7 +38,7 @@ python3 -m venv .venv
 # Activate it
 source .venv/bin/activate
 
-# Install rly in editable mode with dev dependencies
+# Install relay in editable mode with dev dependencies
 pip install -e ".[dev]"
 ```
 
@@ -46,7 +46,7 @@ pip install -e ".[dev]"
 
 ```bash
 # Start the dev server (hot reload enabled)
-python -m src.rly.main --dev
+python -m src.relay.main --dev
 ```
 
 Open [http://127.0.0.1:8000](http://127.0.0.1:8000) in your browser.
@@ -55,7 +55,7 @@ Open [http://127.0.0.1:8000](http://127.0.0.1:8000) in your browser.
 
 ## Desktop app (Windows - PyWebView)
 
-This runs rly as a native desktop window using Edge WebView2. Useful for testing the desktop experience or running rly as a standalone app.
+This runs relay as a native desktop window using Edge WebView2. Useful for testing the desktop experience or running relay as a standalone app.
 
 ### Prerequisites
 
@@ -67,17 +67,17 @@ This runs rly as a native desktop window using Edge WebView2. Useful for testing
 ```powershell
 # Create a Windows venv
 # Choose any local Windows path you like
-mkdir "C:\dev\rly-env"
-python -m venv "C:\dev\rly-env\.venv"
+mkdir "C:\dev\relay-env"
+python -m venv "C:\dev\relay-env\.venv"
 
 # If you get an execution policy error, run this first:
 # Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 # Activate the Windows venv
-& "C:\dev\rly-env\.venv\Scripts\Activate.ps1"
+& "C:\dev\relay-env\.venv\Scripts\Activate.ps1"
 
-# Install rly from the WSL project (adjust the path to match your WSL distro/username)
-pip install -e "\\wsl$\Ubuntu\home\YOUR_USERNAME\dev\rly[dev]"
+# Install relay from the WSL project (adjust the path to match your WSL distro/username)
+pip install -e "\\wsl$\Ubuntu\home\YOUR_USERNAME\dev\relay[dev]"
 ```
 
 ### Update launch.ps1
@@ -91,27 +91,27 @@ Edit `launch.ps1` in the project root and update both paths to match your setup:
 
 ```powershell
 # From any directory in PowerShell
-& "\\wsl$\Ubuntu\home\YOUR_USERNAME\dev\rly\launch.ps1"
+& "\\wsl$\Ubuntu\home\YOUR_USERNAME\dev\relay\launch.ps1"
 ```
 
 ### Why the separate Windows venv?
 
 PyWebView on Windows uses Edge WebView2 via `pythonnet`. The `pythonnet` library crashes when loaded from a UNC path (`\\wsl$\...`), so the venv must live on a native Windows drive. The source code stays in WSL - only the venv is on the Windows side.
 
-If you add new dependencies to `pyproject.toml`, re-run `pip install -e "\\wsl$\...\rly[dev]"` in the Windows venv to sync them.
+If you add new dependencies to `pyproject.toml`, re-run `pip install -e "\\wsl$\...\relay[dev]"` in the Windows venv to sync them.
 
 ---
 
 ## Project structure
 
 ```
-rly/
+relay/
 ├── README.md              # You are here
 ├── pyproject.toml         # Project metadata and dependencies
 ├── launch.ps1             # Windows desktop launcher
 ├── .gitignore
 ├── src/
-│   └── rly/
+│   └── relay/
 │       ├── __init__.py
 │       ├── main.py        # App entry point (FastAPI + PyWebView)
 │       ├── api/            # FastAPI route handlers
@@ -129,8 +129,8 @@ rly/
 
 | Task | Command |
 |------|---------|
-| Start dev server (WSL) | `python -m src.rly.main --dev` |
-| Test desktop window (PowerShell) | `& "\\wsl$\...\rly\launch.ps1"` |
+| Start dev server (WSL) | `python -m src.relay.main --dev` |
+| Test desktop window (PowerShell) | `& "\\wsl$\...\relay\launch.ps1"` |
 | Run tests | `pytest` |
 | Lint | `ruff check src/` |
 

@@ -2,13 +2,13 @@ import threading
 import uvicorn
 import webview
 import argparse
-from rly.api.routes import router
+from relay.api.routes import router
 from pathlib import Path
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-# .parent goes up one directory level, so BASE_DIR -> src/rly/
+# .parent goes up one directory level, so BASE_DIR -> src/relay/
 BASE_DIR = Path(__file__).parent
 
 # FastAPI app
@@ -52,5 +52,5 @@ if __name__ == "__main__":
 
         # Open the PyWebView window pointing at our local server
         # This is the MAIN thread, it blocks until the window is closed
-        webview.create_window("rly", "http://127.0.0.1:8000", width=1000, height=700)
+        webview.create_window("relay", "http://127.0.0.1:8000", width=1000, height=700)
         webview.start()

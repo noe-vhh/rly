@@ -3,9 +3,9 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "rly"
+name = "relay"
 version = "0.1.0"
-description = "Command memory and workflow orchestrator — a terminal companion"
+description = "Command memory and relay orchestrator - a terminal companion"
 requires-python = ">=3.10"
 dependencies = [
     "fastapi>=0.115.0",
