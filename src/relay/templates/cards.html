@@ -1,5 +1,5 @@
 {% for action in actions %}
-<div class="action-card">
+<div class="action-card" data-command="{{ action.command }}" onclick="copyCommand(this)">
     <h3>{{ action.name }}</h3>
     <p>{{ action.command }}</p>
     <div class="action-tags">
@@ -12,8 +12,5 @@
             <span class="badge-destructive">destructive</span>
         {% endif %}
     </div>
-    <button> 
-        ▶
-    </button>
 </div>
 {% endfor %}

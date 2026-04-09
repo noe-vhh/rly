@@ -14,7 +14,7 @@
     --text-muted: #999;         /* de-emphasised text, nav items */
     --text-faint: #666;         /* very quiet text, labels */
     --text-empty: #555;         /* empty state placeholder */
-    --accent: #a78bfa;          /* purple — brand colour */
+    --accent: #a78bfa;          /* purple - brand colour */
 }
 
 body.theme-one-dark {
@@ -137,22 +137,13 @@ body {
     margin-top: 4px;
 }
 
-.action-card button {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    background: none;
-    border: 1px solid var(--border);
-    color: var(--text-primary);
-    font-size: 14px;
-    cursor: pointer;
-    border-radius: 12px;
-    width: 42px;
-    height: 42px;
-}
-
 .action-card button:hover {
     border-color: var(--accent);
+}
+
+.action-card:hover {
+    border-color: var(--accent);
+    cursor: pointer;
 }
 
 .action-tags {
@@ -199,4 +190,46 @@ body {
 .theme-toggle:hover {
     border-color: var(--accent);
     color: var(--accent);
+}
+
+@keyframes fadeInOut {
+    0%   { opacity: 0; transform: translateY(10px); }
+    15%  { opacity: 1; transform: translateY(0); }
+    85%  { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.toast {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    padding: 16px;
+    border: 1px solid var(--border);
+    font-size: 14px;
+    z-index: 1000;
+    border-radius: 8px;
+    background: var(--bg-sidebar);
+    color: var(--accent);
+    animation: fadeInOut 3s ease forwards;
+    display: flex; 
+    align-items: center; 
+    gap: 12px;
+}
+
+.toast > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.toast-title {
+   color: var(--text-primary);
+   font-size: 12px;
+   margin-top: 4px;
+}
+
+.toast-preview {
+    color: var(--text-muted);
+    font-size: 12px;
+    font-family: monospace;
+    margin-top: 4px;
 }

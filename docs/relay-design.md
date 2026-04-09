@@ -1,10 +1,10 @@
-# Relay — Design Document
+# Relay - Design Document
 
 ## Branding
 
 - **Name:** Relay
-- **Origin:** From "relay" — passing signals, chaining actions, relay race handoff
-- **Logo concept:** Purple relay switch / circuit symbol — a line hitting a contact point that triggers another line (see logo explorations: Option A relay switch is the strongest fit)
+- **Origin:** From "relay" - passing signals, chaining actions, relay race handoff
+- **Logo concept:** Purple relay switch / circuit symbol - a line hitting a contact point that triggers another line (see logo explorations: Option A relay switch is the strongest fit)
 - **Primary colour:** Purple (#a78bfa / #534AB7)
 - **Aesthetic:** Dark theme, circuitry-inspired, clean and minimal
 
@@ -31,7 +31,7 @@
 5. Script call copied to clipboard (`bash /tmp/relay-abc123.sh`)
 6. Toast notification: "Copied to clipboard"
 7. User switches to their terminal and pastes
-8. Full output streams naturally in their terminal — 100s of lines, scrollback, grep, all normal
+8. Full output streams naturally in their terminal - 100s of lines, scrollback, grep, all normal
 
 ### Run modes
 
@@ -44,12 +44,12 @@ Each action has a `runMode` field set when creating or editing the action:
 | `silent` | Spawns a terminal, runs, closes immediately. Fire and forget. |
 
 **Spawn behaviour field** (only relevant when `runMode: spawn`):
-- `stay` — terminal stays open after command completes
-- `close` — terminal closes on completion
+- `stay` - terminal stays open after command completes
+- `close` - terminal closes on completion
 
-> Auto-paste was considered and rejected — timing issues, wrong window focus, misfires. Clipboard + toast is simpler, safer, and respects that the terminal belongs to the user.
+> Auto-paste was considered and rejected - timing issues, wrong window focus, misfires. Clipboard + toast is simpler, safer, and respects that the terminal belongs to the user.
 
-### No in-app output — ever
+### No in-app output - ever
 Relay does not capture or display command output. This is intentional:
 - Output belongs in the terminal where it can be scrolled, grepped, and acted on
 - Keeps Relay's role clear: library and launcher, not executor
@@ -90,11 +90,11 @@ Relay does not capture or display command output. This is intentional:
 ### Action cards
 - Name (bold)
 - Truncated command (monospace, muted)
-- Shell tag pill (wsl / bash / powershell / zsh) — distinct from regular tags
+- Shell tag pill (wsl / bash / powershell / zsh) - distinct from regular tags
 - Regular tags as pills
 - Danger badge if `dangerLevel: destructive` (amber)
 - Run button (▶) top right
-- Last run stat (e.g. "last: 2h ago") — Tier 2
+- Last run stat (e.g. "last: 2h ago") - Tier 2
 
 ### Search
 - Filters across name, command, tags, category in real time
@@ -107,32 +107,32 @@ Relay does not capture or display command output. This is intentional:
 Relay has three distinct views. Same underlying action data, different lenses.
 
 ### Library view (Tier 1)
-The dev.md replacement. Browse, search, find, copy. Value is **organisation and discoverability** — you come here when you've forgotten a command or want to find something.
+The dev.md replacement. Browse, search, find, copy. Value is **organisation and discoverability** - you come here when you've forgotten a command or want to find something.
 - Full action cards with all metadata
 - Search and filter by category, tag, shell
 - Click card → opens detail/edit view
 - Run button copies to clipboard
 
 ### Detail / edit view (Tier 1)
-Full card expanded. All fields visible and editable inline. This is where you manage an action — not the library card itself, which stays compact for browsing.
+Full card expanded. All fields visible and editable inline. This is where you manage an action - not the library card itself, which stays compact for browsing.
 - All action fields editable
 - Save writes back to JSON
 - Delete action
 - "Pin to launchpad" toggle
 
 ### Launchpad view (Tier 3)
-Streamdeck-style. Curated, visual, one-click. Value is **speed for things you run constantly** — you come here when you know exactly what you want to run.
+Streamdeck-style. Curated, visual, one-click. Value is **speed for things you run constantly** - you come here when you know exactly what you want to run.
 - Grid of pinned actions
 - Each action has an icon (user assigned or auto-generated from name initials)
 - User arranges grid layout
-- Click to run — param popup if needed, then clipboard + toast
-- Separate from the library — you curate what lives here
+- Click to run - param popup if needed, then clipboard + toast
+- Separate from the library - you curate what lives here
 
-> **Build order rationale:** Library first, always. You can't pin to a launchpad that doesn't exist yet. The launchpad is also the demo moment — immediately legible to colleagues in a way the library takes time to appreciate.
+> **Build order rationale:** Library first, always. You can't pin to a launchpad that doesn't exist yet. The launchpad is also the demo moment - immediately legible to colleagues in a way the library takes time to appreciate.
 
 ---
 
-## Add action — UI form
+## Add action - UI form
 
 Accessible via **+ New action** button. Opens a modal/panel. No JSON editing required.
 
@@ -150,13 +150,13 @@ Accessible via **+ New action** button. Opens a modal/panel. No JSON editing req
 | Tags | Tag input | Type and press Enter to add. Pill displayed, click to remove |
 | Working directory | Text | Optional, defaults to `~` |
 | Parameters | Dynamic list | "+ Add param" adds a row: param name + type + optional default |
-| Run mode | Dropdown | Fixed options: `copy`, `spawn`, `silent` — see run modes |
+| Run mode | Dropdown | Fixed options: `copy`, `spawn`, `silent` - see run modes |
 
 ### Add category popup
 - Triggered by "+ New category" in the category dropdown, or "+ Add category" in sidebar
 - Simple single input: category name
 - Confirm adds it to the JSON and selects it in the form
-- No page reload — HTMX updates the dropdown and sidebar inline
+- No page reload - HTMX updates the dropdown and sidebar inline
 
 ---
 
@@ -238,7 +238,7 @@ Accessible via **+ New action** button. Opens a modal/panel. No JSON editing req
 }
 ```
 
-> `$.steps.<id>.output.<key>` is the output-linking syntax — Tier 2. Step outputs are captured and passed as params to subsequent steps.
+> `$.steps.<id>.output.<key>` is the output-linking syntax - Tier 2. Step outputs are captured and passed as params to subsequent steps.
 
 ### Categories manifest
 
@@ -276,8 +276,8 @@ Stored separately. References action IDs from the library. User arranges grid po
 
 The `shell` field on an action serves two purposes:
 
-1. **Display** — shown as a distinct pill on the action card, styled differently from regular tags
-2. **Filtering** — sidebar or filter bar can filter by shell type
+1. **Display** - shown as a distinct pill on the action card, styled differently from regular tags
+2. **Filtering** - sidebar or filter bar can filter by shell type
 
 Shell values: `wsl`, `bash`, `zsh`, `powershell`
 
