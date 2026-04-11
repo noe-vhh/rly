@@ -119,7 +119,8 @@ relay/
 │       ├── static/         # CSS, JS, images
 │       └── templates/      # Jinja2 HTML templates
 ├── data/
-│   └── actions.json       # Your action library
+│   ├── actions.json       # Your action library
+│   └── categories.json    # Category manifest (auto-seeded from actions.json on first run)
 └── tests/
 ```
 

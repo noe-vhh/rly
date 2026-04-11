@@ -1,0 +1,24 @@
+{
+    "categories": [
+        {
+            "id": "kubernetes",
+            "name": "Kubernetes"
+        },
+        {
+            "id": "docker",
+            "name": "Docker"
+        },
+        {
+            "id": "database",
+            "name": "Database"
+        },
+        {
+            "id": "system",
+            "name": "System"
+        },
+        {
+            "id": "dev",
+            "name": "Dev"
+        }
+    ]
+}

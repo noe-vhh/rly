@@ -3,24 +3,15 @@ import uvicorn
 import webview
 import argparse
 import json
+from contextlib import asynccontextmanager
 from relay.api.routes import router
 from pathlib import Path
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-# .parent goes up one directory level, so BASE_DIR -> src/relay/
+# Paths
 BASE_DIR = Path(__file__).parent
-
-# FastAPI app
-app = FastAPI()
-
-app.include_router(router)
-
-# Tell FastAPI where to find static files (CSS, JS) and templates (HTML)
-# The "/static" first arg is the URL path, so your CSS will be at /static/css/style.css
-app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
-templates = Jinja2Templates(directory=BASE_DIR / "templates")
 
 def find_project_root():
     path = Path(__file__).parent
@@ -30,39 +21,62 @@ def find_project_root():
         path = path.parent
     raise FileNotFoundError("Could not find project root")
 
-DATA_PATH = find_project_root() / "data" / "actions.json"
+PROJECT_ROOT = find_project_root()
+DATA_PATH = PROJECT_ROOT / "data" / "actions.json"
+CATEGORIES_PATH = PROJECT_ROOT / "data" / "categories.json"
 
-@app.get("/")
-def home(request: Request):
+# Startup seeding
+def seed_categories():
     with open(DATA_PATH) as f:
         actions = json.load(f)
 
-    categories = sorted(set(a["category"] for a in actions))
-    print(f"DEBUG categories: {categories}")
+    with open(CATEGORIES_PATH) as f:
+        categories = json.load(f)
 
-    return templates.TemplateResponse(request, "index.html", {"categories": categories})
+    if not categories["categories"]:
+        seen = set()
+        new_cats = []
+        for action in actions:
+            if action["category"] not in seen:
+                seen.add(action["category"])
+                new_cats.append({
+                    "id": action["category"],
+                    "name": action["category"].capitalize()
+                })
+        categories["categories"] = new_cats
+        with open(CATEGORIES_PATH, "w") as f:
+            json.dump(categories, f, indent=4)
 
+# App startup/shutdown
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    seed_categories()
+    yield
+
+# App
+app = FastAPI(lifespan=lifespan)
+app.include_router(router)
+app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
+templates = Jinja2Templates(directory=BASE_DIR / "templates")
+
+# Routes
+@app.get("/")
+def home(request: Request):
+    return templates.TemplateResponse(request, "index.html", {})
+
+# Server
 def start_server():
-    """
-    Run the FastAPI server in a background thread
-    """
     uvicorn.run(app, host="127.0.0.1", port=8000, log_level="info")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    # store_true means: if --dev is present, set it to True
     parser.add_argument("--dev", action="store_true")
     args = parser.parse_args()
 
     if args.dev:
-        # runs directly, blocks until you Ctrl+C
-        start_server()  
+        start_server()
     else:
-        # Start the server in a BACKGROUND thread | daemon=True means "kill this thread when the main program exits"
         server_thread = threading.Thread(target=start_server, daemon=True)
         server_thread.start()
-
-        # Open the PyWebView window pointing at our local server
-        # This is the MAIN thread, it blocks until the window is closed
         webview.create_window("relay", "http://127.0.0.1:8000", width=1000, height=700)
         webview.start()

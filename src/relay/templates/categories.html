@@ -1,0 +1,22 @@
+<a class="nav-item active"
+    onclick="selectCategory(this)"
+    hx-get="/api/actions/cards"
+    hx-target="#action-list"
+    hx-swap="innerHTML">
+    All
+</a>
+{% for category in categories %}
+<a class="nav-item"
+    onclick="selectCategory(this)"
+    hx-get="/api/actions/cards?category={{ category.id }}"
+    hx-target="#action-list"
+    hx-swap="innerHTML">
+    <span>
+        {{ category.name }}
+    </span>
+    <span class="nav-item-delete" 
+    onclick="event.stopPropagation(); deleteCategory('{{ category.id }}', '{{ category.name }}')">
+    <i data-lucide="trash-2"></i>
+    </span>
+</a>
+{% endfor %}

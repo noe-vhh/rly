@@ -83,8 +83,24 @@ body {
     padding: 16px 10px 16px 10px;
 }
 
+.nav-input {
+    background: var(--bg-active);
+    border: 1px solid var(--accent);
+    color: var(--text-primary);
+    width: 100%;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: inherit;
+    outline: none;
+    border-radius: 6px;
+    padding: 8px 10px;
+    box-sizing: border-box;
+}
+
 .nav-item {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: 8px 10px;
     border-radius: 6px;
     color: var(--text-primary);
@@ -98,6 +114,45 @@ body {
     color: var(--accent);
     border: 1px solid var(--accent);
     cursor: pointer;
+}
+
+.nav-item-delete {
+    margin-left: auto;
+    opacity: 0;
+    color: var(--text-faint);
+    display: flex;
+    align-items: center;
+}
+
+.nav-item:hover .nav-item-delete {
+    opacity: 1;
+}
+
+.nav-item-delete:hover {
+    color: var(--red);
+}
+
+.nav-item-delete svg {
+    width: 18px;
+    height: 18px;
+}
+
+.nav-add-btn {
+    display: block;
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: auto;
+    background: none;
+    border: none;
+    color: var(--text-faint);
+    font-size: 14px;
+    text-align: left;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.nav-add-btn:hover {
+    color: var(--accent);  /* purple on hover — same as nav-item active */
 }
 
 /* Content area */

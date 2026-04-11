@@ -6,7 +6,16 @@ function copyCommand(element) {
     const danger = element.dataset.danger
 
     if (danger === 'destructive') {
-        showConfirmModal(name, command)
+        showConfirmModal(
+            name,
+            'This action is destructive and may be difficult to reverse. Are you sure?',
+            () => {
+                navigator.clipboard.writeText(command).then(() => {
+                    showToast(name, command, 'destructive')
+                })
+            },
+            'Copy anyway'  // 👈 add this
+        )
     } else {
         navigator.clipboard.writeText(command).then(() => {
             showToast(name, command, danger)
@@ -14,7 +23,7 @@ function copyCommand(element) {
     }
 }
 
-function showConfirmModal(name, command) {
+function showConfirmModal(title, message, onConfirm, confirmLabel = 'Confirm') {
     const overlay = document.createElement('div')
     overlay.className = 'modal-overlay'
 
@@ -26,11 +35,11 @@ function showConfirmModal(name, command) {
             <i data-lucide="triangle-alert"></i>
             <h3>Destructive action</h3>
         </div>
-        <p>${name}</p>
-        <p class="modal-warning">This action is destructive and may be difficult to reverse. Are you sure?</p>
+        <p>${title}</p>
+        <p class="modal-warning">${message}</p>
         <div class="modal-buttons">
             <button class="btn-cancel">Cancel</button>
-            <button class="btn-confirm">Copy anyway</button>
+            <button class="btn-confirm">${confirmLabel}</button>
         </div>
     `
 
@@ -45,9 +54,7 @@ function showConfirmModal(name, command) {
     
     overlay.querySelector('.btn-confirm').onclick = () => {
     document.body.removeChild(overlay)
-    navigator.clipboard.writeText(command).then(() => {
-        showToast(name, command, 'destructive')
-    })
+    onConfirm()
     }
 }
 
@@ -122,3 +129,60 @@ function toggleFilter(element, tag) {
     element.classList.toggle('tag-active')
     filterCards(document.getElementById('search-input').value)
 }
+
+function addCategory() {
+    const nav = document.querySelector('.sidebar-nav')
+
+    const input = document.createElement('input')
+    input.className = 'nav-item nav-input'
+    input.placeholder = 'Category name...'
+
+    nav.appendChild(input)
+
+    input.focus()
+
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            const name = input.value.trim()
+            if (!name) return
+
+            fetch('/api/categories', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: name })
+            }).then(() => {
+                htmx.ajax('GET', '/api/categories', {
+                    target: '#sidebar-categories',
+                    swap: 'innerHTML'
+                })
+            })
+
+            nav.removeChild(input)
+        }
+
+        if (e.key === 'Escape') {
+            nav.removeChild(input)
+        }
+    })
+}
+
+function deleteCategory(id, name) {
+    showConfirmModal(
+        `Delete "${name}"`,
+        'This category will be removed. Actions in it will not be deleted.',
+        () => {
+            fetch(`/api/categories/${id}`, { method: 'DELETE' })
+                .then(() => {
+                    htmx.ajax('GET', '/api/categories', {
+                        target: '#sidebar-categories',
+                        swap: 'innerHTML'
+                    })
+                })
+        },
+        'Delete'
+    )
+}
+
+document.body.addEventListener('htmx:afterSwap', () => {
+    lucide.createIcons()
+})
