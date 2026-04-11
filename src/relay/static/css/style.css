@@ -126,7 +126,28 @@ body {
     flex: 1;
 }
 
+.search-input {
+    background: var(--bg-active);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    width: 220px;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
 /* Action cards */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 .action-card {
     background: var(--bg-sidebar);
     border: 1px solid var(--border);

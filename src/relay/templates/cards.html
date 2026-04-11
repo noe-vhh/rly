@@ -1,7 +1,10 @@
 {% for action in actions %}
 <div class="action-card" data-command="{{ action.command }}" data-danger="{{ action.dangerLevel }}" onclick="copyCommand(this)">
     <h3>{{ action.name }}</h3>
-    <p>{{ action.command }}</p>
+    {% if action.description %}
+    <p class="action-description">{{ action.description }}</p>
+    {% endif %}
+    <p class="action-command">{{ action.command }}</p>
     <div class="action-tags">
         {% for tag in action.tags %}
             <span class="tag">{{ tag }}</span>

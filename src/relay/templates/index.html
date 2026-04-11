@@ -15,7 +15,7 @@
                 <nav class="sidebar-nav">
                     <div class="nav-label">Categories</div>
                     <a class="nav-item active"
-                        onclick="document.querySelector('.nav-item.active').classList.remove('active'); this.classList.add('active')"
+                        onclick="selectCategory(this)"
                         hx-get="/api/actions/cards"
                         hx-target="#action-list"
                         hx-swap="innerHTML">
@@ -23,7 +23,7 @@
                     </a>
                     {% for category in categories %}
                     <a class="nav-item"
-                        onclick="document.querySelector('.nav-item.active').classList.remove('active'); this.classList.add('active')"
+                        onclick="selectCategory(this)"
                         hx-get="/api/actions/cards?category={{ category }}"
                         hx-target="#action-list"
                         hx-swap="innerHTML">
@@ -35,14 +35,23 @@
         <main class="content">
             <header class="content-header">
                 <h1>All actions</h1>
-                <button class="theme-toggle" onclick="
-                    document.body.classList.toggle('theme-one-dark');
-                    if (document.body.classList.contains('theme-one-dark')) {
-                        localStorage.setItem('theme', 'one-dark');
-                    } else {
-                        localStorage.removeItem('theme');
-                    }
-                ">◐</button>
+                <div class="header-actions">
+                    <input
+                        type="text"
+                        id="search-input"
+                        class="search-input"
+                        placeholder="Search actions..."
+                        oninput="filterCards(this.value)"
+                    />
+                    <button class="theme-toggle" onclick="
+                        document.body.classList.toggle('theme-one-dark');
+                        if (document.body.classList.contains('theme-one-dark')) {
+                            localStorage.setItem('theme', 'one-dark');
+                        } else {
+                            localStorage.removeItem('theme');
+                        };
+                    ">◐</button>
+                </div>
             </header>
             <div class="action-list" 
                 id="action-list"
@@ -53,11 +62,12 @@
             </div>
         </main>
     </div>
+<script src="/static/js/main.js"></script>
 <script>
     if (localStorage.getItem('theme') === 'one-dark') {
         document.body.classList.add('theme-one-dark');
     }
+    selectCategory(document.querySelector('.nav-item.active'))
 </script>
-<script src="/static/js/main.js"></script>
 </body>
 </html>

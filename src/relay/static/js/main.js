@@ -77,3 +77,23 @@ function showToast(name, command, danger) {
         toast.remove()
     }, 3000)
 }
+
+function filterCards(searchTerm) {
+    const cards = document.querySelectorAll('.action-card')
+    cards.forEach(card => {
+        const name = card.querySelector('h3').textContent
+        const command = card.dataset.command
+        const description = card.querySelector('.action-description')?.textContent ?? ''
+
+        const haystack = (name + ' ' + command + ' ' + description).toLowerCase()
+        const matches = haystack.includes(searchTerm.toLowerCase())
+        card.style.display = matches ? 'block' : 'none'
+    })
+}
+
+function selectCategory(element) {
+    document.querySelector('.nav-item.active').classList.remove('active')
+    element.classList.add('active')
+    document.getElementById('search-input').value = ''
+    document.querySelector('h1').textContent = element.textContent.trim()
+}
