@@ -1,3 +1,5 @@
+const activeFilters = new Set()
+
 function copyCommand(element) {
     const name = element.querySelector('h3').textContent
     const command = element.dataset.command
@@ -87,7 +89,19 @@ function filterCards(searchTerm) {
 
         const haystack = (name + ' ' + command + ' ' + description).toLowerCase()
         const matches = haystack.includes(searchTerm.toLowerCase())
-        card.style.display = matches ? 'block' : 'none'
+
+        const cardTags = card.dataset.tags ? card.dataset.tags.split(',') : []
+        const tagMatch = activeFilters.size === 0 || [...activeFilters].every(tag => cardTags.includes(tag))
+
+        card.style.display = (matches && tagMatch) ? 'block' : 'none'
+    })
+    document.querySelectorAll('.tag, .badge-normal, .badge-warning, .badge-destructive').forEach(el => {
+    const value = el.textContent.trim()
+    if (activeFilters.has(value)) {
+        el.classList.add('tag-active')
+    } else {
+        el.classList.remove('tag-active')
+    }
     })
 }
 
@@ -96,4 +110,15 @@ function selectCategory(element) {
     element.classList.add('active')
     document.getElementById('search-input').value = ''
     document.querySelector('h1').textContent = element.textContent.trim()
+    activeFilters.clear()
+}
+
+function toggleFilter(element, tag) {
+    if (activeFilters.has(tag)) {
+        activeFilters.delete(tag)
+    } else {
+        activeFilters.add(tag)
+    }
+    element.classList.toggle('tag-active')
+    filterCards(document.getElementById('search-input').value)
 }

@@ -1,5 +1,9 @@
 {% for action in actions %}
-<div class="action-card" data-command="{{ action.command }}" data-danger="{{ action.dangerLevel }}" onclick="copyCommand(this)">
+<div class="action-card" 
+    data-command="{{ action.command }}"
+    data-danger="{{ action.dangerLevel }}"
+    data-tags="{{ (action.tags + [action.dangerLevel]) | join(',') }}"
+    onclick="copyCommand(this)">
     <h3>{{ action.name }}</h3>
     {% if action.description %}
     <p class="action-description">{{ action.description }}</p>
@@ -7,12 +11,14 @@
     <p class="action-command">{{ action.command }}</p>
     <div class="action-tags">
         {% for tag in action.tags %}
-            <span class="tag">{{ tag }}</span>
+            <span class="tag" onclick="event.stopPropagation(); toggleFilter(this, '{{ tag }}')">{{ tag }}</span>
         {% endfor %}
-        {% if action.dangerLevel == "warning" %}
-            <span class="badge-warning">warning</span>
+        {% if action.dangerLevel == "normal" %}
+        <span class="badge-normal" onclick="event.stopPropagation(); toggleFilter(this, 'normal')">normal</span>
+        {% elif action.dangerLevel == "warning" %}
+            <span class="badge-warning" onclick="event.stopPropagation(); toggleFilter(this, 'warning')">warning</span>
         {% elif action.dangerLevel == "destructive" %}
-            <span class="badge-destructive">destructive</span>
+            <span class="badge-destructive" onclick="event.stopPropagation(); toggleFilter(this, 'destructive')">destructive</span>
         {% endif %}
     </div>
 </div>
