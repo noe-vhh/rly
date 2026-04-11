@@ -2,6 +2,7 @@ import threading
 import uvicorn
 import webview
 import argparse
+import json
 from relay.api.routes import router
 from pathlib import Path
 from fastapi import FastAPI, Request
@@ -21,14 +22,25 @@ app.include_router(router)
 app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
 templates = Jinja2Templates(directory=BASE_DIR / "templates")
 
+def find_project_root():
+    path = Path(__file__).parent
+    while path != path.parent:
+        if (path / "pyproject.toml").exists():
+            return path
+        path = path.parent
+    raise FileNotFoundError("Could not find project root")
+
+DATA_PATH = find_project_root() / "data" / "actions.json"
+
 @app.get("/")
 def home(request: Request):
-    """
-    Serve the main page
-    """
-    # FastAPI + Jinja2 requires passing the request object to the template
-    # This is how the HTML file gets rendered and sent to the browser/window
-    return templates.TemplateResponse(request, "index.html")
+    with open(DATA_PATH) as f:
+        actions = json.load(f)
+
+    categories = sorted(set(a["category"] for a in actions))
+    print(f"DEBUG categories: {categories}")
+
+    return templates.TemplateResponse(request, "index.html", {"categories": categories})
 
 def start_server():
     """

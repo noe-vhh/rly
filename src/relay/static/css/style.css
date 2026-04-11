@@ -93,11 +93,11 @@ body {
     font-weight: 600;
 }
 
+.nav-item:hover,
 .nav-item.active {
-    background: transparent;
     color: var(--accent);
     border: 1px solid var(--accent);
-    border-radius: 6px;
+    cursor: pointer;
 }
 
 /* Content area */
@@ -229,6 +229,10 @@ body {
     15%  { opacity: 1; transform: translateY(0); }
     85%  { opacity: 1; }
     100% { opacity: 0; }
+}
+
+@keyframes fadeOut {
+    to { opacity: 0; transform: translateY(10px); }
 }
 
 /* Toasts */

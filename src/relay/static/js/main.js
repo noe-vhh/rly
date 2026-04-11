@@ -63,6 +63,12 @@ function showToast(name, command, danger) {
     </div>
     `
 
+    const existingToast = document.querySelector('.toast')
+    if (existingToast) {
+    existingToast.style.animation = 'fadeOut 0.2s ease forwards'
+    setTimeout(() => existingToast.remove(), 200)
+    }
+
     document.body.appendChild(toast)
 
     lucide.createIcons()

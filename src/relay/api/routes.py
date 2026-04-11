@@ -9,20 +9,28 @@ templates = Jinja2Templates(directory=BASE_DIR / "templates")
 
 router = APIRouter(prefix="/api", tags=["actions"])
 
+def find_project_root():
+    path = Path(__file__).parent
+    while path != path.parent:
+        if (path / "pyproject.toml").exists():
+            return path
+        path = path.parent
+    raise FileNotFoundError("Could not find project root")
+
+DATA_PATH = find_project_root() / "data" / "actions.json"
+
 @router.get("/actions")
 async def get_actions():
-    # Build the path to data/actions.json
-    data_path = Path(__file__).parent.parent.parent.parent / "data" / "actions.json"
-
-    # Open and parse it
-    with open(data_path) as f:
+    # Open JSON and parse it
+    with open(DATA_PATH) as f:
         return json.load(f)
 
 @router.get("/actions/cards")
-async def get_action_cards(request: Request):
-    data_path = Path(__file__).parent.parent.parent.parent / "data" / "actions.json"
-    
-    with open(data_path) as f:
+async def get_action_cards(request: Request, category: str = None):
+    with open(DATA_PATH) as f:
         actions = json.load(f)
+
+    if category:
+        actions = [a for a in actions if a["category"] == category]
     
     return templates.TemplateResponse(request, "cards.html", {"actions": actions})
