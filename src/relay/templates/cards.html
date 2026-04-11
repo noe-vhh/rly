@@ -1,14 +1,14 @@
 {% for action in actions %}
-<div class="action-card" data-command="{{ action.command }}" onclick="copyCommand(this)">
+<div class="action-card" data-command="{{ action.command }}" data-danger="{{ action.dangerLevel }}" onclick="copyCommand(this)">
     <h3>{{ action.name }}</h3>
     <p>{{ action.command }}</p>
     <div class="action-tags">
         {% for tag in action.tags %}
             <span class="tag">{{ tag }}</span>
         {% endfor %}
-    </div>
-    <div class="action-dangerlevel">
-        {% if action.dangerLevel == "destructive" %}
+        {% if action.dangerLevel == "warning" %}
+            <span class="badge-warning">warning</span>
+        {% elif action.dangerLevel == "destructive" %}
             <span class="badge-destructive">destructive</span>
         {% endif %}
     </div>
